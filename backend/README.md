@@ -36,124 +36,204 @@ The following data must be provided in the request body as a JSON object:
   "email": "john.doe@example.com",
   "password": "securePassword123"
 }
-
-
-# Documentation for `/users/login` Endpoint
-
----
-
-### **Endpoint**
-`POST /users/login`
-
----
-
-### **Description**
-This endpoint is used to authenticate a user using their email and password. Upon successful authentication, a JWT token is generated and returned along with the user details.
-
----
-
-### **Request Body**
-The request must include the following fields in JSON format:
-
-| Field          | Type    | Required | Description                                    |
-|----------------|---------|----------|------------------------------------------------|
-| `email`        | String  | Yes      | The user's email address (must be valid).      |
-| `password`     | String  | Yes      | The user's password (minimum 3 characters).    |
-
----
-
-### **Validation Rules**
-1. `email` must be a valid email address.
-2. `password` must have a minimum length of 3 characters.
-
----
-
-### **Response**
-1. **Success Response**
-   - **Status Code**: `200 OK`
-   - **Description**: Login successful, JWT token and user details returned.
-   - **Example Response**:
-     ```json
-     {
-       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-       "user": {
-         "_id": "64afc05e1234567890abcdef",
-         "fullname": {
-           "firstname": "John",
-           "lastname": "Doe"
-         },
-         "email": "john.doe@example.com",
-         "socketId": null
-       }
-     }
-     ```
-
-2. **Error Responses**
-   - **Invalid Input**:
-     - **Status Code**: `400 Bad Request`
-     - **Description**: Validation errors in the request body.
-     - **Example Response**:
-       ```json
-       {
-         "errors": [
-           {
-             "msg": "Invalid Email",
-             "param": "email",
-             "location": "body"
-           }
-         ]
-       }
-       ```
-
-   - **Invalid Credentials**:
-     - **Status Code**: `401 Unauthorized`
-     - **Description**: Incorrect email or password provided.
-     - **Example Response**:
-       ```json
-       {
-         "message": "Invalid email or password"
-       }
-       ```
-
----
-
-### **Usage Example**
-
-**Request**:
-```bash
-curl -X POST http://localhost:3000/users/login \
--H "Content-Type: application/json" \
--d '{
-  "email": "test@test.com",
-  "password": "password123"
-}'
 ```
+---
 
-**Response**:
+# User Login Endpoint Documentation
+
+## **Endpoint:** `/login`
+
+### **Method:** `POST`
+
+### **Description:**
+The `/login` endpoint allows a user to log in by providing valid credentials (email and password). Upon successful login, it returns a JSON Web Token (JWT) for authentication and the user's details.
+
+---
+
+### **Request Requirements:**
+
+#### **Headers:**
+- Content-Type: `application/json`
+
+#### **Body:**
+The body must be sent in JSON format and include the following fields:
+
+| Field     | Type   | Required | Description                          |
+|-----------|--------|----------|--------------------------------------|
+| `email`   | String | Yes      | The email address of the user.       |
+| `password`| String | Yes      | The password of the user.            |
+
+**Example Request Body:**
 ```json
 {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "user": {
-    "_id": "64afc05e1234567890abcdef",
-    "fullname": {
-      "firstname": "John",
-      "lastname": "Doe"
-    },
-    "email": "john.doe@example.com",
-    "socketId": null
-  }
+  "email": "test@test.com",
+  "password": "password123"
 }
 ```
 
 ---
 
-### **Error Scenarios**
-| Scenario                          | Status Code | Example Response                                                  |
-|-----------------------------------|-------------|--------------------------------------------------------------------|
-| Missing/Invalid email or password | `400`       | `{ "errors": [ { "msg": "Invalid Email", "param": "email", "location": "body" } ] }` |
-| Email not found                   | `401`       | `{ "message": "Invalid email or password" }`                      |
-| Incorrect password                | `401`       | `{ "message": "Invalid email or password" }`                      |
+### **Validations:**
+The endpoint validates the following fields:
+- `email`: Must be a valid email address.
+- `password`: Must be at least 3 characters long.
+
+If the validation fails, a **400 Bad Request** status code is returned with an error message.
 
 ---
 
-This documentation helps developers understand the requirements and responses for the `/users/login` endpoint.
+### **Responses:**
+
+#### **Success:**
+- **Status Code:** `200 OK`
+- **Description:** Successfully logged in.
+- **Response Body:**
+  ```json
+  {
+    "token": "<jwt_token>",
+    "user": {
+      "_id": "<user_id>",
+      "fullname": {
+        "firstname": "John",
+        "lastname": "Doe"
+      },
+      "email": "test@test.com",
+      "socketId": null
+    }
+  }
+  ```
+
+#### **Client Errors:**
+1. **Invalid Input:**
+   - **Status Code:** `400 Bad Request`
+   - **Description:** One or more fields are invalid.
+   - **Response Body Example:**
+     ```json
+     {
+       "errors": [
+         {
+           "msg": "Invalid Email",
+           "param": "email",
+           "location": "body"
+         }
+       ]
+     }
+     ```
+
+2. **Invalid Credentials:**
+   - **Status Code:** `401 Unauthorized`
+   - **Description:** The email or password is incorrect.
+   - **Response Body Example:**
+     ```json
+     {
+       "message": "Invalid email or password"
+     }
+     ```
+
+---
+
+### **Notes:**
+- Ensure the `password` field is securely hashed and stored in the database.
+- Use the returned `token` for further authenticated requests.
+- Handle errors gracefully on the client side.
+
+
+## **Endpoint:** `/login`
+
+### **Method:** `POST`
+
+### **Description:**
+The `/login` endpoint allows a user to log in by providing valid credentials (email and password). Upon successful login, it returns a JSON Web Token (JWT) for authentication and the user's details.
+
+---
+
+### **Request Requirements:**
+
+#### **Headers:**
+- Content-Type: `application/json`
+
+#### **Body:**
+The body must be sent in JSON format and include the following fields:
+
+| Field     | Type   | Required | Description                          |
+|-----------|--------|----------|--------------------------------------|
+| `email`   | String | Yes      | The email address of the user.       |
+| `password`| String | Yes      | The password of the user.            |
+
+**Example Request Body:**
+```json
+{
+  "email": "test@test.com",
+  "password": "password123"
+}
+```
+
+---
+
+### **Validations:**
+The endpoint validates the following fields:
+- `email`: Must be a valid email address.
+- `password`: Must be at least 3 characters long.
+
+If the validation fails, a **400 Bad Request** status code is returned with an error message.
+
+---
+
+### **Responses:**
+
+#### **Success:**
+- **Status Code:** `200 OK`
+- **Description:** Successfully logged in.
+- **Response Body:**
+  ```json
+  {
+    "token": "<jwt_token>",
+    "user": {
+      "_id": "<user_id>",
+      "fullname": {
+        "firstname": "John",
+        "lastname": "Doe"
+      },
+      "email": "test@test.com",
+      "socketId": null
+    }
+  }
+  ```
+
+#### **Client Errors:**
+1. **Invalid Input:**
+   - **Status Code:** `400 Bad Request`
+   - **Description:** One or more fields are invalid.
+   - **Response Body Example:**
+     ```json
+     {
+       "errors": [
+         {
+           "msg": "Invalid Email",
+           "param": "email",
+           "location": "body"
+         }
+       ]
+     }
+     ```
+
+2. **Invalid Credentials:**
+   - **Status Code:** `401 Unauthorized`
+   - **Description:** The email or password is incorrect.
+   - **Response Body Example:**
+     ```json
+     {
+       "message": "Invalid email or password"
+     }
+     ```
+
+---
+
+### **Notes:**
+- Ensure the `password` field is securely hashed and stored in the database.
+- Use the returned `token` for further authenticated requests.
+- Handle errors gracefully on the client side.
+
+
+
+
