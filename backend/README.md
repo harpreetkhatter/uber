@@ -206,3 +206,102 @@ This endpoint is used to register a new captain with the system. It accepts capt
     }
   }
 }
+```
+
+# Captain Endpoints Documentation
+
+## 1. Captain Login Endpoint
+
+**Endpoint:** `/captains/login`  
+**Method:** `POST`  
+**Description:** This endpoint is used for captain login. It verifies credentials and returns a JWT token upon successful authentication.
+
+### Request Headers
+- `Content-Type: application/json`
+
+### Request Body
+| Field     | Type   | Required | Description                             |
+|-----------|--------|----------|-----------------------------------------|
+| email     | String | Yes      | The registered email of the captain.    |
+| password  | String | Yes      | The captain's password (minimum 6 characters). |
+
+### Responses
+
+#### Success Response
+**Status Code:** `200 OK`  
+**Description:** Successfully authenticated the captain.  
+**Response Body:**
+```json
+{
+  "token": "jwt_token_here",
+  "captain": {
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com",
+    "vehicle": {
+      "color": "blue",
+      "plate": "ABC123",
+      "capacity": 4,
+      "vehicleType": "car"
+    }
+  }
+}
+```
+## 2. Get Captain Profile Endpoint
+
+**Endpoint:** `/captains/profile`  
+**Method:** `GET`  
+**Description:** This endpoint retrieves the profile details of the authenticated captain.
+
+### Request Headers
+- `Authorization: Bearer <JWT token>`
+
+### Responses
+
+#### Success Response
+**Status Code:** `200 OK`  
+**Description:** Successfully retrieved captain's profile.  
+**Response Body:**
+```json
+{
+  "captain": {
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com",
+    "vehicle": {
+      "color": "blue",
+      "plate": "ABC123",
+      "capacity": 4,
+      "vehicleType": "car"
+    },
+    "status": "active",
+    "location": {
+      "lat": 40.7128,
+      "lng": -74.0060
+    }
+  }
+}
+```
+## 3. Captain Logout Endpoint
+
+**Endpoint:** `/captains/logout`  
+**Method:** `GET`  
+**Description:** This endpoint logs out the authenticated captain by blacklisting the JWT token.
+
+### Request Headers
+- `Authorization: Bearer <JWT token>`
+
+### Responses
+
+#### Success Response
+**Status Code:** `200 OK`  
+**Description:** Successfully logged out.  
+**Response Body:**
+```json
+{
+  "message": "Logout successfully"
+}
