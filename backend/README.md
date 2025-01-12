@@ -147,3 +147,65 @@ No body is required for this request.
   {
     "message": "Logged out successfully"
   }
+  ```
+  ## **Captain Registration Endpoint Documentation**
+
+### **Endpoint**: `/captains/register`
+This endpoint is used to register a new captain with the system. It accepts captain personal information and vehicle details, and returns a JWT token upon successful registration.
+
+---
+
+### **Method**
+`POST`
+
+---
+
+### **Request Headers**
+- `Content-Type: application/json`
+
+---
+
+### **Request Body**
+The request body must contain the following fields:
+
+```json
+{
+  "fullname": {
+    "firstname": "string",  // Required. Must be at least 3 characters long.
+    "lastname": "string"    // Optional. Must be at least 3 characters long.
+  },
+  "email": "string",         // Required. Must be a valid email address. Must be at least 5 characters long.
+  "password": "string",      // Required. Must be at least 6 characters long.
+  "vehicle": {
+    "color": "string",       // Required. Must be at least 3 characters long.
+    "plate": "string",       // Required. Must be at least 3 characters long.
+    "capacity": 1,           // Required. Must be at least 1.
+    "vehicleType": "string"  // Required. Must be one of "car", "bike", or "auto".
+  }
+}
+```
+## **Responses**
+
+### **Success Response**
+- **Status Code**: `201 Created`
+- **Description**: Successfully registered the captain and generated a JWT token.
+- **Response Body**:
+
+```json
+{
+  "token": "jwt_token_here",  // Generated JWT token for the registered captain.
+  "captain": {
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com",
+    "vehicle": {
+      "color": "blue",
+      "plate": "ABC123",
+      "capacity": 4,
+      "vehicleType": "car"
+    }
+  }
+}
+
