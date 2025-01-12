@@ -70,6 +70,49 @@ The following data must be provided in the request body as a JSON object:
   "password": "password123"
 }
 ```
+
+## **User Profile Endpoint Documentation**
+
+### **Endpoint**: `/users/profile`  
+This endpoint is used to fetch the details of the currently authenticated user.
+
+---
+
+### **Method**  
+`GET`
+
+---
+
+### **Request Headers**
+- `Content-Type: application/json`
+- `Authorization: Bearer <jwt_token>`
+
+---
+
+### **Request Body**  
+No body is required for this request.
+
+---
+
+### **Responses:**
+
+#### **Success:**
+- **Status Code:** `200 OK`
+- **Description:** Successfully retrieved the user profile.
+- **Response Body:**
+
+```json
+{
+  "_id": "<user_id>",
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "john.doe@example.com",
+  "socketId": null
+}
+```
+
 ## **User Logout Endpoint Documentation**
 
 ### **Endpoint**: `/users/logout`
