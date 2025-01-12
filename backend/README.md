@@ -166,24 +166,22 @@ This endpoint is used to register a new captain with the system. It accepts capt
 ---
 
 ### **Request Body**
-The request body must contain the following fields:
 
-```json
-{
-  "fullname": {
-    "firstname": "string",  // Required. Must be at least 3 characters long.
-    "lastname": "string"    // Optional. Must be at least 3 characters long.
-  },
-  "email": "string",         // Required. Must be a valid email address. Must be at least 5 characters long.
-  "password": "string",      // Required. Must be at least 6 characters long.
-  "vehicle": {
-    "color": "string",       // Required. Must be at least 3 characters long.
-    "plate": "string",       // Required. Must be at least 3 characters long.
-    "capacity": 1,           // Required. Must be at least 1.
-    "vehicleType": "string"  // Required. Must be one of "car", "bike", or "auto".
-  }
-}
-```
+| Field                    | Type     | Required | Description                                               |
+|--------------------------|----------|----------|-----------------------------------------------------------|
+| `fullname`               | Object   | Yes      | An object containing the `firstname` and `lastname` of the user. |
+| `fullname.firstname`     | String   | Yes      | The first name of the user (minimum 3 characters).       |
+| `fullname.lastname`      | String   | No       | The last name of the user (minimum 3 characters).        |
+| `email`                  | String   | Yes      | A unique email address for the user (minimum 5 characters). |
+| `password`               | String   | Yes      | A secure password for the user (minimum 6 characters).    |
+| `vehicle`                | Object   | Yes      | An object containing vehicle details.                    |
+| `vehicle.color`          | String   | Yes      | The color of the vehicle (minimum 3 characters).          |
+| `vehicle.plate`          | String   | Yes      | The vehicle's plate number (minimum 3 characters).        |
+| `vehicle.capacity`       | Number   | Yes      | The capacity of the vehicle (must be at least 1).         |
+| `vehicle.vehicleType`    | String   | Yes      | The type of vehicle (must be "car", "bike", or "auto").   |
+
+---
+
 ## **Responses**
 
 ### **Success Response**
@@ -193,7 +191,7 @@ The request body must contain the following fields:
 
 ```json
 {
-  "token": "jwt_token_here",  // Generated JWT token for the registered captain.
+  "token": "jwt_token_here", 
   "captain": {
     "fullname": {
       "firstname": "John",
@@ -208,4 +206,3 @@ The request body must contain the following fields:
     }
   }
 }
-
