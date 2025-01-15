@@ -116,7 +116,7 @@ const Home = () => {
         {/* image temorary */}
         <img
           className="h-full w-full "
-          src="https://cdn.dribbble.com/users/914217/screenshots/4506553/media/66b3d16f627edc27b44c023e4ec40b28.gif"
+          src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif"
           alt=""
         />
       </div>
@@ -195,7 +195,7 @@ const Home = () => {
       <div ref={vehicleFoundRef} className="fixed z-10 bottom-0  px-3 py-6 pt-12 bg-white w-full translate-y-full ">
         <LookingForDriver setvehicleFound={setvehicleFound} />
       </div>
-      <div ref={waitingForDriverRef} className="fixed z-10 bottom-0  px-3 py-6 pt-12 bg-white w-full  ">
+      <div ref={waitingForDriverRef} className="fixed z-10 bottom-0  px-3 py-6 pt-12 bg-white w-full translate-y-full ">
         <WaitingForDriver waitingForDriver={waitingForDriver} />
       </div>
     </div>
